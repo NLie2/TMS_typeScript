@@ -1,0 +1,79 @@
+class TMS { 
+    TeamReplies: Array<Array<number>>;
+
+    members: number; 
+
+    public credibilityNormal: number; 
+    specializationNormal: number; 
+    coordinationNormal : number;
+
+    public credibilityAggregateTeam: number; 
+    public specializationAggregateTeam: number; 
+    public coordinationAggregateTeam: number; 
+
+    
+
+    constructor(replies: Array<Array<number>>, howManyMembers:number) {
+        this.members = howManyMembers;
+        this.TeamReplies = replies; 
+    }
+
+
+    Display(){
+        console.log(this.members); 
+        console.log(this.members);
+        //console.log("Sum" + this.x + this.y)
+    }
+
+    //calculate aggregate score for entire team for 1 item
+    public calculateAggregateScorePeritemForTeam(TeamMembers: number, from:number, to:number): number {
+
+        var result: number; 
+        for(let i = 0; i< TeamMembers; i++)
+        {
+            for(let k =from; k<to; k++)
+            {
+                result += this.TeamReplies[i][k];
+            }
+        }
+        return result;
+    }
+
+    //sum score of 3 categories
+    public calculateAggregateScoreForScale(): number {
+        let aggregateScore = this.credibilityAggregateTeam + this.coordinationAggregateTeam + this.coordinationAggregateTeam;
+
+        return aggregateScore
+    }
+
+    //calculate normalized score for one item for entire team
+    public TMSscorenormalizedTeamItem(teamsize: number, from: number, to: number): number {
+
+        let min = teamsize* 5* 1; 
+        let max = teamsize* 5*5;
+
+        let X = this.calculateAggregateScorePeritemForTeam(teamsize, from, to);
+
+        let Xnormalized = (X- min)/ (max-min); 
+        return Xnormalized; 
+    }
+
+    //Give normalized score for entire team for entire scale
+    public TMSscoreForTeamtotal()
+    {
+        let min = this.members* 15* 1; 
+        let max = this.members* 15* 5; 
+
+        let X = this.calculateAggregateScoreForScale(); 
+
+        let Xnormalized = (X- min)/ (max-min);
+
+        return Xnormalized; 
+    }
+
+
+}
+
+
+//let tms = new TMS(2,3); 
+//tms.Display();
